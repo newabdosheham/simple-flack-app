@@ -18,12 +18,6 @@ resource "aws_instance" "server" {
     destination = "/home/ubuntu/app.py"  # Replace with the path on the remote instance
    }
 
-Even though you're using Ubuntu, the solution still applies because Ubuntu is based on Debian and uses the same package management system (APT). The DEBIAN_FRONTEND=noninteractive environment variable is applicable to Ubuntu systems as well. Here's how you can modify your configuration specifically for Ubuntu:
-Updated Solution for Ubuntu
-1. Suppress Interactive Prompts for APT in Ubuntu
-
-Use the DEBIAN_FRONTEND=noninteractive environment variable to disable prompts, which works seamlessly on Ubuntu as well. Update your remote-exec provisioner like this:
-
 provisioner "remote-exec" {
   inline = [
     "export DEBIAN_FRONTEND=noninteractive",
