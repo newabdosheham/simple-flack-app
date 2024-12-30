@@ -29,3 +29,4 @@ provisioner "remote-exec" {
     "nohup sudo python3 app.py &"
   ]
 }
+}
