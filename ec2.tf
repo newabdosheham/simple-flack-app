@@ -24,7 +24,7 @@ provisioner "remote-exec" {
     "curl -O https://bootstrap.pypa.io/get-pip.py",
     "sudo python3 get-pip.py",
     "cd /home/ubuntu",
-    "pip3 install flask --break-system-packages"
+    "pip3 install flask --break-system-packages",
     "nohup sudo python3 app.py &"
   ]
 }
