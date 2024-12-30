@@ -21,7 +21,8 @@ resource "aws_instance" "server" {
 provisioner "remote-exec" {
   inline = [
     "export DEBIAN_FRONTEND=noninteractive",
-    "sudo apt-get install -y python3-pip",
+    "curl -O https://bootstrap.pypa.io/get-pip.py",
+    "sudo python3 get-pip.py",
     "cd /home/ubuntu",
     "sudo pip3 install flask",
     "nohup sudo python3 app.py &"
