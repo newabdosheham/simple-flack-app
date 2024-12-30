@@ -22,7 +22,7 @@ resource "aws_instance" "server" {
     inline = [
       "echo 'Hello from the remote instance'",
       #"sudo apt update -y",  # Update package lists (for ubuntu)
-      "sudo add-apt-repository universe",
+      "sudo add-apt-repository universe -y",
       "sudo apt-get install -y python3-pip",  # Example package installation
       "cd /home/ubuntu",
        "sudo pip3 install flask",
