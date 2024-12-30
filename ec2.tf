@@ -18,15 +18,21 @@ resource "aws_instance" "server" {
     destination = "/home/ubuntu/app.py"  # Replace with the path on the remote instance
    }
 
-   provisioner "remote-exec" {
-    inline = [
-      "echo 'Hello from the remote instance'",
-      #"sudo apt update -y",  # Update package lists (for ubuntu)
-      "sudo add-apt-repository universe -y",
-      "sudo apt-get install -y python3-pip",  # Example package installation
-      "cd /home/ubuntu",
-       "sudo pip3 install flask",
-      "sudo python3 app.py",
-    ]
-   }
+Even though you're using Ubuntu, the solution still applies because Ubuntu is based on Debian and uses the same package management system (APT). The DEBIAN_FRONTEND=noninteractive environment variable is applicable to Ubuntu systems as well. Here's how you can modify your configuration specifically for Ubuntu:
+Updated Solution for Ubuntu
+1. Suppress Interactive Prompts for APT in Ubuntu
+
+Use the DEBIAN_FRONTEND=noninteractive environment variable to disable prompts, which works seamlessly on Ubuntu as well. Update your remote-exec provisioner like this:
+
+provisioner "remote-exec" {
+  inline = [
+    "export DEBIAN_FRONTEND=noninteractive",
+    #"sudo apt-get update -y",
+    #"sudo apt-get upgrade -y",
+    "sudo apt-get install -y python3-pip",
+    "cd /home/ubuntu",
+    "sudo pip3 install flask",
+    "nohup sudo python3 app.py &"
+  ]
+}
 }
