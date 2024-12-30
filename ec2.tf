@@ -21,8 +21,6 @@ resource "aws_instance" "server" {
 provisioner "remote-exec" {
   inline = [
     "export DEBIAN_FRONTEND=noninteractive",
-    "sudo apt-get update -y",
-    "sudo apt-get upgrade -y -o Dpkg::Options::='--force-confdef' -o Dpkg::Options::='--force-confnew'",
     "sudo apt-get install -y python3-pip",
     "cd /home/ubuntu",
     "sudo pip3 install flask",
