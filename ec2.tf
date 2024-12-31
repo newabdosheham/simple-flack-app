@@ -13,10 +13,10 @@ resource "aws_instance" "server" {
     apt-get update -y
     apt-get install -y software-properties-common python3 python3-pip python3-venv unzip
 
-    # Create project directory and copy Flask app
+    # Create project directory and write Flask app
     mkdir -p /home/ubuntu/templates
-    echo "${app_py_content}" > /home/ubuntu/app.py
-    echo "${index_html_content}" > /home/ubuntu/templates/index.html
+    echo "${file_content_app_py}" > /home/ubuntu/app.py
+    echo "${file_content_index_html}" > /home/ubuntu/templates/index.html
 
     # Set up Python virtual environment
     python3 -m venv /home/ubuntu/flask_env
@@ -32,15 +32,10 @@ resource "aws_instance" "server" {
   }
 }
 
-# Local file reading for app.py content
 locals {
-  app_py_content = <<EOT
-  ${file("./app.py")}
-  EOT
-
-  index_html_content = <<EOT
-  ${file("./templates/index.html")}
-  EOT
+  # Read file contents for app.py and index.html
+  file_content_app_py      = templatefile("${path.module}/app.py", {})
+  file_content_index_html  = templatefile("${path.module}/templates/index.html", {})
 }
 
 output "instance_ip" {
