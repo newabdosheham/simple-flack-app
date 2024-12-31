@@ -18,6 +18,11 @@ resource "aws_instance" "server" {
     destination = "/home/ubuntu/app.py"  # Replace with the path on the remote instance
    }
 
+   # File provisioner to copy a file from local to the remote EC2 instance
+   provisioner "file" {
+    source      = "./templates/index.html"  # Replace with the path to your local file
+    destination = "/home/ubuntu/templates/index.html"  # Replace with the path on the remote instance
+   }
 
 
 provisioner "remote-exec" {
