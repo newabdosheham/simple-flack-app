@@ -15,8 +15,13 @@ resource "aws_instance" "server" {
 
     # Create project directory and write Flask app
     mkdir -p /home/ubuntu/templates
-    echo "${file_content_app_py}" > /home/ubuntu/app.py
-    echo "${file_content_index_html}" > /home/ubuntu/templates/index.html
+    cat <<EOT > /home/ubuntu/app.py
+    ${templatefile("${path.module}/app.py", {})}
+    EOT
+
+    cat <<EOT > /home/ubuntu/templates/index.html
+    ${templatefile("${path.module}/templates/index.html", {})}
+    EOT
 
     # Set up Python virtual environment
     python3 -m venv /home/ubuntu/flask_env
@@ -30,12 +35,6 @@ resource "aws_instance" "server" {
   tags = {
     Name = "Flask Server"
   }
-}
-
-locals {
-  # Read file contents for app.py and index.html
-  file_content_app_py      = templatefile("${path.module}/app.py", {})
-  file_content_index_html  = templatefile("${path.module}/templates/index.html", {})
 }
 
 output "instance_ip" {
